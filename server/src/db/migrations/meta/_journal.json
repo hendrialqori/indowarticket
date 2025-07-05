@@ -1,0 +1,69 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1751625350059,
+      "tag": "20250704103550_outstanding_komodo",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1751626521852,
+      "tag": "20250704105521_last_bishop",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1751626831306,
+      "tag": "20250704110031_fluffy_tigra",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1751626839215,
+      "tag": "20250704110039_goofy_luminals",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1751626868484,
+      "tag": "20250704110108_quick_bug",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1751626880222,
+      "tag": "20250704110120_remarkable_trish_tilby",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1751685051540,
+      "tag": "20250705031051_dear_madelyne_pryor",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1751689925733,
+      "tag": "20250705043205_magical_ronan",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1751695747615,
+      "tag": "20250705060907_busy_lady_vermin",
+      "breakpoints": true
+    }
+  ]
+}

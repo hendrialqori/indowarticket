@@ -1,0 +1,2 @@
+ALTER TABLE `tickets` ADD `user_id` varchar(8);--> statement-breakpoint
+ALTER TABLE `tickets` ADD CONSTRAINT `tickets_user_id_users_id_fk` FOREIGN KEY (`user_id`) REFERENCES `users`(`id`) ON DELETE set null ON UPDATE no action;
