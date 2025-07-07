@@ -1,0 +1,675 @@
+{
+    "openapi": "3.0.4",
+    "info" : {
+        "title" : "War Ticket API",
+        "version" : "1.0.0",
+        "description": "Backend service designed to manage event-based ticket sales with secure user authentication via Google OAuth 2.0."
+    },
+    "components": {
+        "securitySchemes": {
+            "Bearer": {
+                "scheme": "bearer",
+                "type": "http",
+                "bearerFormat": "JWT",
+                "description": "Authorization : Bearer [JWT_TOKEN]"
+            }
+        },
+        "responses": {
+            "Unauthorized": {
+                "description": "Unauthorized",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "statusCode": {
+                                    "type": "number"
+                                },
+                                "message":{
+                                    "type": "string"
+                                },
+                                "errors": {
+                                    "type": "array",
+                                    "default": []
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Unprocessable_Entity": {
+                "description": "Unprocessable Entity",
+                "content": {
+                    "application/json": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "statusCode":{"type": "number"},
+                                "message": {
+                                    "type": "string"
+                                },
+                                "errors": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "expected": {
+                                                "type": "string",
+                                                "default": "string"
+                                            },
+                                            "code": {
+                                                "type": "string",
+                                                "default":"invalid_type"
+                                            },
+                                            "path": {
+                                                "type": "array",
+                                                "default": ["name"]
+                                            },
+                                            "message": {
+                                                "type": "string",
+                                                "default": "Invalid input: expected string"
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "servers": [
+        {
+          "url": "http://localhost:8080/api",
+          "description": "Development server"
+        }
+      ],
+    "paths": {
+        "/auth/signin": {
+            "get": {
+                "tags": ["Auth"],
+                "summary": "Signin with google OAuth2.0",
+                "responses": {
+                    "304": {
+                        "description": "Redirect to frontend with JWT token in query string, Example: https://frontend.app/auth/callback?token=JWT_TOKEN"
+                    },
+                    "401": {
+                        "description": "Unauthorize or signin failed"
+                    }
+                }
+            }
+        },
+        "/auth/credential": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Auth"],
+                "summary": "Credential profile",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                       "statusCode": {
+                                            "type": "integer"
+                                       },
+                                       "data": {
+                                        "type": "object",
+                                        "properties": {
+                                            "id" :{
+                                                "type": "integer"
+                                            },
+                                            "email": {
+                                                "type": "string"
+                                            },
+                                            "display_name": {
+                                                "type": "string"
+                                            },
+                                            "picture": {
+                                                "type": "string"
+                                            },
+                                            "role": {
+                                                "type": "string"
+                                            },
+                                            "provider_id": {
+                                                "type": "string"
+                                            },
+                                            "created_at": {
+                                                "type": "string"
+                                            }
+                                        }
+                                       },
+                                       "message": {
+                                        "type": "string"
+                                       }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "integer",
+                                            "default": 401
+                                        },
+                                        "errors": {
+                                            "type": "array",
+                                            "default": "[]"
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "default": "Unauthorized"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/event/index": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Event"],
+                "summary": "Event list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "default": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "default": "OK"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items":{
+                                                "properties": {
+                                                    "id":{
+                                                        "type": "string"
+                                                    },
+                                                    "name": {
+                                                        "type": "string"
+                                                    },
+                                                    "description": {
+                                                        "type": "string"
+                                                    },
+                                                    "start_time": {
+                                                        "type": "string"
+                                                    },
+                                                    "ticket_count": {
+                                                        "type": "number"
+                                                    },
+                                                    "ticket_available": {
+                                                        "type": "number"
+                                                    },
+                                                    "ticket_price": {
+                                                        "type": "number"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                       "$ref": "#/components/responses/Unauthorized"
+                    },
+                    "422": {
+                       "$ref": "#/components/responses/Unprocessable_Entity"
+                    }
+                }
+            }
+        },
+        "/event/create":{
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Event"],
+                "summary": "Create event",
+                "requestBody": {
+                    "description": "create new event",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "start_time": {
+                                        "type": "string"
+                                    },
+                                    "ticket_count": {
+                                        "type": "number"
+                                    },
+                                    "ticket_available": {
+                                        "type": "number"
+                                    },
+                                    "ticket_price": {
+                                        "type": "number"
+                                    }
+                                }   
+                            }
+                        }
+                    }       
+                },
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode":{
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "start_time": {
+                                                    "type": "string"
+                                                },
+                                                "ticket_count": {
+                                                    "type": "number"
+                                                },
+                                                "ticket_available": {
+                                                    "type": "number"
+                                                },
+                                                "ticket_price": {
+                                                    "type": "number"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                }
+                                            }   
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     },
+                     "422": {
+                        "$ref": "#/components/responses/Unprocessable_Entity"
+                     }
+                }
+            }
+        },
+        "/event/update/{id}": {
+            "put": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Event"],
+                "summary": "Update event",
+                "requestBody": {
+                    "description": "create new event",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "name": {
+                                        "type": "string"
+                                    },
+                                    "description": {
+                                        "type": "string"
+                                    },
+                                    "start_time": {
+                                        "type": "string"
+                                    },
+                                    "ticket_count": {
+                                        "type": "number"
+                                    },
+                                    "ticket_available": {
+                                        "type": "number"
+                                    },
+                                    "ticket_price": {
+                                        "type": "number"
+                                    },
+                                    "updated_at": {
+                                        "type": "string"
+                                    }
+                                }   
+                            }
+                        }
+                    }       
+                },
+                "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "description": "Event id",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode":{
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "id": {
+                                                    "type": "string"
+                                                },
+                                                "name": {
+                                                    "type": "string"
+                                                },
+                                                "description": {
+                                                    "type": "string"
+                                                },
+                                                "start_time": {
+                                                    "type": "string"
+                                                },
+                                                "ticket_count": {
+                                                    "type": "number"
+                                                },
+                                                "ticket_available": {
+                                                    "type": "number"
+                                                },
+                                                "ticket_price": {
+                                                    "type": "number"
+                                                },
+                                                "created_at": {
+                                                    "type": "string"
+                                                },
+                                                "updated_at": {
+                                                    "type": "string"
+                                                }
+                                            }   
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     },
+                     "422": {
+                        "$ref": "#/components/responses/Unprocessable_Entity"
+                     }
+                }
+            }
+        },
+        "/event/remove/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Event"],
+                "summary": "Remove event",
+                "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "description": "Event id",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode":{
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "default": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
+                }
+            }
+        },
+        "/ticket/index": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Ticket"],
+                "summary": "Ticket list",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "default": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "default": "ok"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number"
+                                                    },
+                                                    "code": {
+                                                        "type": "string"
+                                                    },
+                                                    "user": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            },
+                                                            "display_name":{
+                                                                "type": "string"
+                                                            },
+                                                            "provider_id": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "event": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number"
+                                                            },
+                                                            "name": {
+                                                                "type": "string"
+                                                            },
+                                                            "start_time": {
+                                                                "type": "string"
+                                                            },
+                                                            "ticket_available": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "purchase_time": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
+                }
+            }
+        },
+        "/ticket/buy": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "summary": "Ticket buy",
+                "tags": ["Ticket"],
+                "requestBody": {
+                    "description": "create new event",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "event_id": {
+                                        "type": "string"
+                                    }
+                                
+                                }   
+                            }
+                        }
+                    }       
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number",
+                                            "default": 200
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "default": "ok"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "user_id": {
+                                                    "type": "string"
+                                                },
+                                                "event_id": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                    }
+                }
+            }
+        }
+    }
+    
+}
