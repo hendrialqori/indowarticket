@@ -1,0 +1,1 @@
+ALTER TABLE `users` MODIFY COLUMN `role` enum('ADMIN','BUYER') DEFAULT 'BUYER';

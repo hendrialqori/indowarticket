@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD CONSTRAINT `ticket_available_check` CHECK (`events`.`ticket_available` >= 0);
