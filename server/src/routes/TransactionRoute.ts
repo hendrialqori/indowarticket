@@ -8,7 +8,7 @@ const route = Router()
 
 route.use(tokenMiddleware)
 
-route.get('/index-ticket/:id', roleMiddleware(ROLE.ADMIN), transactionController.indexByTicketId)
+route.get('/index', transactionController.index)
 route.post("/create", transactionController.create)
 // route.put("/paid", transactionController.paid)
 // route.put("/failed", transactionController.failed)
