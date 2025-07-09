@@ -1,22 +1,23 @@
 import { mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
-import { tickets as tickes_table } from "./Ticket";
 import { genuuid } from "@/utils/uuid";
 import { PAYMENT } from "@/constants/enum";
 import { createInsertSchema } from "drizzle-zod";
-import { users as users_table } from "./User";
+import { users } from "./User";
+import { events } from "./Event";
 
 export const transactions = mysqlTable('transactions', {
     id: varchar("id", { length: 8 })
         .primaryKey()
         .$defaultFn(() => genuuid()),
     description: text('description'),
-    ticket_id: varchar("ticket_id", { length: 8 }).references(() => tickes_table.id, {
-        onDelete: "set null"
+    user_id: varchar('user_id', { length: 8 }).references(() => users.id, {
+        onDelete: 'set null'
     }),
-    user_id: varchar('user_id', { length: 8 }).references(() => users_table.id, {
+    event_id: varchar('event_id', { length: 8 }).references(() => events.id, {
         onDelete: 'set null'
     }),
     status: mysqlEnum("status", [PAYMENT.PENDING, PAYMENT.PAID, PAYMENT.FAILED]).default(PAYMENT.PENDING),
+    invoice_url: text('invoice_url'),
     purchase_time: timestamp("purchase_time"),
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at")
