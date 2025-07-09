@@ -20,7 +20,7 @@ const googleStrategy = new GoogleStrategy(
         } as UserSelect;
 
         // check if there is user with provider id equal to google credential id
-        const user = await authRepository.show(profile.id);
+        const user = await authRepository.showByProviderId(googleCredential.provider_id);
 
         // if not exits, create new user with these credential
         if (!user) {
