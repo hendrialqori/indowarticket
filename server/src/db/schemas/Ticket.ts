@@ -1,22 +1,18 @@
 import { genuuid } from "@/utils/uuid";
 import { mysqlTable, timestamp, varchar, mysqlEnum } from "drizzle-orm/mysql-core";
-import { users as users_table } from "./User";
-import { events as events_table } from "./Event";
 import { createInsertSchema } from 'drizzle-zod'
+import { STATUS } from "@/constants/enum";
+import { transactions } from "./Transaction";
 
 export const tickets = mysqlTable("tickets", {
     id: varchar("id", { length: 8 })
         .primaryKey()
         .$defaultFn(() => genuuid()),
     code: varchar("code", { length: 16 }).$defaultFn(() => genuuid(16)),
-    user_id: varchar("user_id", { length: 8 }).references(() => users_table.id, {
+    transaction_id: varchar("transaction_id", { length: 8 }).references(() => transactions.id, {
         onDelete: "set null",
     }),
-    event_id: varchar("event_id", { length: 8 }).references(() => events_table.id, {
-        onDelete: "set null",
-    }),
-    purchase_time: timestamp("purchase_time").defaultNow(),
-    status: mysqlEnum(["VALID", "USED"]).default('VALID'),
+    status: mysqlEnum([STATUS.VALID, STATUS.USED]).default(STATUS.VALID),
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at"),
 });
