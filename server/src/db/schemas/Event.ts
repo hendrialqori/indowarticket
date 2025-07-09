@@ -1,6 +1,6 @@
 import { genuuid } from "@/utils/uuid";
 import { sql } from "drizzle-orm";
-import { check, int, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
+import { check, int, mysqlEnum, mysqlTable, text, timestamp, varchar } from "drizzle-orm/mysql-core";
 import { createInsertSchema, createUpdateSchema } from "drizzle-zod";
 import { z } from "zod/v4";
 
@@ -16,6 +16,7 @@ export const events = mysqlTable("events", {
     ticket_count: int("ticket_count").notNull(),
     ticket_available: int("ticket_available").notNull(),
     ticket_price: int("ticket_price").notNull(),
+    status: mysqlEnum("status", ["SOON", "START", "END"]).default("SOON"),
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at"),
 },
