@@ -1,11 +1,11 @@
 import { Router } from "express";
 import { tokenMiddleware } from "@/middlewares/TokenMiddleware";
-import * as ticketController from '@/controllers/TicketController'
+import * as ticketController from "@/controllers/TicketController";
 
-export const route = Router()
+export const route = Router();
 
-route.use(tokenMiddleware)
+route.use(tokenMiddleware);
 
-route.get('/index', ticketController.index)
+route.get("/index", ticketController.index);
 
-export default route
+export default route;

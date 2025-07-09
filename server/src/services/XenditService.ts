@@ -1,11 +1,11 @@
-import { xenditClient } from '@/config/xendit'
-import { type EventSelect } from '@/db/schemas/Event'
-import { type UserSelect } from '@/db/schemas/User'
-import { type CreateInvoiceRequest } from 'xendit-node/invoice/models'
+import { xenditClient } from "@/config/xendit";
+import { type EventSelect } from "@/db/schemas/Event";
+import { type UserSelect } from "@/db/schemas/User";
+import { type CreateInvoiceRequest } from "xendit-node/invoice/models";
 
-const invoiceClient = xenditClient.Invoice
+const invoiceClient = xenditClient.Invoice;
 
-export async function create(payload: { user: UserSelect, event: EventSelect }) {
+export async function create(payload: { user: UserSelect; event: EventSelect }) {
     const invoiceData: CreateInvoiceRequest = {
         externalId: `trx-${Date.now()}-${payload.user.email}`,
         currency: "IDR",
@@ -22,19 +22,19 @@ export async function create(payload: { user: UserSelect, event: EventSelect }) 
                 price: payload.event.ticket_price,
                 quantity: 1,
                 category: "Ticket",
-            }
+            },
         ],
         customerNotificationPreference: {
             invoiceCreated: ["whatsapp", "email"],
             invoicePaid: ["whatsapp", "email"],
-            invoiceReminder: ["whatsapp", "email"]
+            invoiceReminder: ["whatsapp", "email"],
         },
         // successRedirectUrl: SUCCESS_PAYMENT_URL,
         // failureRedirectUrl: FAILED_PAYMENT_URL
-    }
+    };
 
-    const result = await invoiceClient.createInvoice({ data: invoiceData })
-    return result
+    const result = await invoiceClient.createInvoice({ data: invoiceData });
+    return result;
 }
 
 export function webhook() {

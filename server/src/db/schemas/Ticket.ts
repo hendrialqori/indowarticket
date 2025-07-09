@@ -1,6 +1,6 @@
 import { genuuid } from "@/utils/uuid";
 import { mysqlTable, timestamp, varchar, mysqlEnum } from "drizzle-orm/mysql-core";
-import { createInsertSchema } from 'drizzle-zod'
+import { createInsertSchema } from "drizzle-zod";
 import { STATUS } from "@/constants/enum";
 import { transactions } from "./Transaction";
 
@@ -17,7 +17,7 @@ export const tickets = mysqlTable("tickets", {
     updated_at: timestamp("updated_at"),
 });
 
-export const createTicketSchema = createInsertSchema(tickets)
+export const createTicketSchema = createInsertSchema(tickets);
 
 export type TicketSelect = typeof tickets.$inferSelect;
 

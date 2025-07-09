@@ -26,21 +26,21 @@ export async function credential(req: Request, res: Response) {
 }
 
 export async function transaction(req: Request, res: Response) {
-    const id = (req.user as UserSelect).id
-    const result = await authRepository.transaction(id)
+    const id = (req.user as UserSelect).id;
+    const result = await authRepository.transaction(id);
     mockApiSuccess(res, {
         statusCode: status.OK,
-        message: 'ok',
-        data: result
-    })
+        message: "ok",
+        data: result,
+    });
 }
 
 export async function ticket(req: Request, res: Response) {
-    const id = (req.user as UserSelect).id
-    const result = await authRepository.ticket(id)
+    const id = (req.user as UserSelect).id;
+    const result = await authRepository.ticket(id);
     mockApiSuccess(res, {
         statusCode: status.OK,
-        message: 'ok',
-        data: result
-    })
+        message: "ok",
+        data: result,
+    });
 }

@@ -17,9 +17,9 @@ route.get(
     authContoller.callbackUrl,
 );
 
-route.use(tokenMiddleware)
+route.use(tokenMiddleware);
 route.get("/credential", authContoller.credential);
-route.get("/transaction/index", authContoller.transaction)
-route.get("/ticket/index", authContoller.ticket)
+route.get("/transaction/index", authContoller.transaction);
+route.get("/ticket/index", authContoller.ticket);
 
 export default route;

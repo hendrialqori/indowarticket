@@ -7,7 +7,7 @@ export function tokenMiddleware(req: Request, res: Response, next: NextFunction)
     const { authorization } = req.headers;
     if (!authorization) throw new AuthError("authorization header needed!");
 
-    const token = authorization?.split(" ")[1]!;
+    const token = authorization?.split(" ")[1];
     if (!token) throw new AuthError("token needed!");
 
     try {

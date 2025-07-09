@@ -1,5 +1,5 @@
-import { z } from 'zod/v4'
-import { ValidationError } from './errors/ValidationError';
+import { z } from "zod/v4";
+import { ValidationError } from "./errors/ValidationError";
 
 export function validateId(id: string) {
     const idSchema = z.string().length(8);
@@ -10,4 +10,3 @@ export function validateId(id: string) {
     }
     return result.data;
 }
-

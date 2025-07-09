@@ -39,9 +39,9 @@ export async function remove(id: string) {
         throw new ValidationError(result.error, "Error occured when parse params id");
     }
 
-    const event = await eventRepository.show(result.data)
+    const event = await eventRepository.show(result.data);
     if (!event) {
-        throw new ApiError(status.NOT_FOUND, 'event not found')
+        throw new ApiError(status.NOT_FOUND, "event not found");
     }
 
     await eventRepository.remove(result.data);

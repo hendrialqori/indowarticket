@@ -7,7 +7,7 @@ import cors from "cors";
 import passport from "passport";
 import morgan from "morgan";
 import swaggerUI from "swagger-ui-express";
-import swaggerDocs from "docs/swagger.json";
+import swaggerDocs from "./docs/swagger.json";
 import routes from "./routes";
 import { errorMiddleware } from "./middlewares/ErrorMiddleware";
 import { CLIENT_URL, PORT } from "./constants/dotenv";

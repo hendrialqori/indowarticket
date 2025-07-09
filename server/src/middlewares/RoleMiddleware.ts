@@ -5,10 +5,10 @@ import status from "http-status";
 
 export function roleMiddleware(...allowedRoles: string[]) {
     return (req: Request, res: Response, next: NextFunction) => {
-        const userRole = (req.user as UserSelect).role!
+        const userRole = (req.user as UserSelect).role!;
         if (!allowedRoles.includes(userRole)) {
-            throw new ApiError(status.FORBIDDEN, 'forbidden')
+            throw new ApiError(status.FORBIDDEN, "forbidden");
         }
-        next()
-    }
+        next();
+    };
 }

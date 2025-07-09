@@ -11,7 +11,7 @@ route.use(tokenMiddleware);
 route.get("/index", eventController.index);
 
 // Applied RBAC here!
-route.use(roleMiddleware(ROLE.ADMIN))
+route.use(roleMiddleware(ROLE.ADMIN));
 route.post("/create", eventController.create);
 route.put("/update/:id", eventController.update);
 route.delete("/remove/:id", eventController.remove);

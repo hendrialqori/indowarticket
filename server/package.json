@@ -6,7 +6,7 @@
   "scripts": {
     "start": "dotenv -e .env.prod -- node dist/index.js",
     "dev": "dotenv -e .env -- tsx watch --clear-screen=false src/index.ts",
-    "build": "tsc --build",
+    "build": "pnpm run lint && pnpm run format && tsc --build",
     "lint": "eslint src/**/* --fix",
     "format": "prettier --write 'src/**/*.{ts,js,mjs}'",
     "db:gen": "drizzle-kit generate",
