@@ -37,4 +37,6 @@ export async function create(payload: { user: UserSelect, event: EventSelect }) 
     return result
 }
 
-export function webhook() { }
+export function webhook() {
+    // payment code here!
+}
