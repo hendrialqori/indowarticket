@@ -1,0 +1,1 @@
+ALTER TABLE `events` ADD `status` enum('SOON','START','END') DEFAULT 'SOON';

@@ -1,0 +1,1 @@
+ALTER TABLE `transactions` ADD `invoice_url` text;
