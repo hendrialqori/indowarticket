@@ -1,1 +1,0 @@
-ALTER TABLE `tickets` ADD `status` enum('VALID','USED') NOT NULL;

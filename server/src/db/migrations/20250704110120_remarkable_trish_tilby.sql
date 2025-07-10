@@ -1,2 +1,0 @@
-ALTER TABLE `tickets` ADD `event_id` varchar(8);--> statement-breakpoint
-ALTER TABLE `tickets` ADD CONSTRAINT `tickets_event_id_events_id_fk` FOREIGN KEY (`event_id`) REFERENCES `events`(`id`) ON DELETE set null ON UPDATE no action;
