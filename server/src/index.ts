@@ -2,6 +2,7 @@ import "./config/aliases";
 import "./config/passport";
 import "dotenv/config";
 import express from "express";
+import http from 'node:http'
 import cookierParser from "cookie-parser";
 import cors from "cors";
 import passport from "passport";
@@ -11,8 +12,13 @@ import swaggerDocs from "./docs/swagger.json";
 import routes from "./routes";
 import { errorMiddleware } from "./middlewares/ErrorMiddleware";
 import { CLIENT_URL, PORT } from "./constants/dotenv";
+import * as socketService from "./services/SocketService";
 
 const app = express();
+
+const httpServer = http.createServer(app)
+
+socketService.initialize(httpServer)
 
 app.use(express.json());
 
