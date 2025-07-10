@@ -9,7 +9,7 @@ export default defineConfig({
     dbCredentials: { url },
     migrations: {
         prefix: 'timestamp',
-        table: '__drizzle_migrations__'
+        table: '__migrations__'
     },
 
     verbose: true
