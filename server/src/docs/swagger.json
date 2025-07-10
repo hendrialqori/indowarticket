@@ -155,29 +155,8 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorized",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "object",
-                                    "properties": {
-                                        "statusCode": {
-                                            "type": "integer",
-                                            "default": 401
-                                        },
-                                        "errors": {
-                                            "type": "array",
-                                            "default": "[]"
-                                        },
-                                        "message": {
-                                            "type": "string",
-                                            "default": "Unauthorized"
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
                 }
             }
         },
@@ -256,8 +235,8 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorize or signin failed"
-                    }
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
                 }
             }
         },
@@ -341,8 +320,195 @@
                         }
                     },
                     "401": {
-                        "description": "Unauthorize or signin failed"
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
+                }
+            }
+        },
+        "/auth/conversation/index": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
                     }
+                ],
+                "tags": ["Auth"],
+                "summary": "All conversation auth user",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "object",
+                                        "properties": {
+                                            "statusCode": {
+                                                "type": "number"
+                                            },
+                                            "message": {
+                                                "type": "string"
+                                            },
+                                            "data": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "object",
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "string"
+                                                        },
+                                                        "buyer": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "string"
+                                                                },
+                                                                "email": {
+                                                                    "type": "string"
+                                                                },
+                                                                "display_name": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "admin": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "string"
+                                                                },
+                                                                "email": {
+                                                                    "type": "string"
+                                                                },
+                                                                "display_name": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "event": {
+                                                            "type": "object",
+                                                            "properties": {
+                                                                "id": {
+                                                                    "type": "string"
+                                                                },
+                                                                "name": {
+                                                                    "type": "string"
+                                                                },
+                                                                "description": {
+                                                                    "type": "string"
+                                                                },
+                                                                "start_time":{
+                                                                    "type": "string"
+                                                                },
+                                                                "ticket_price": {
+                                                                    "type": "string"
+                                                                },
+                                                                "status": {
+                                                                    "type": "string"
+                                                                },
+                                                                "created_at": {
+                                                                    "type": "string"
+                                                                }
+                                                            }
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string"
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
+                }
+            }
+        },
+        "/auth/message/index/{conversation_id}": {
+            "get": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Auth"],
+                "summary": "All message auth user",
+                "parameters": [
+                    {
+                      "name": "conversation_id",
+                      "in": "path",
+                      "required": true,
+                      "description": "Conversation id",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                  ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id":{
+                                                        "type": "string"
+                                                    },
+                                                    "message": {
+                                                        "type": "string"
+                                                    },
+                                                    "sender": {
+                                                        "type": "object",
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "string"
+                                                            },
+                                                            "display_name": {
+                                                                "type": "string"
+                                                            },
+                                                            "email": {
+                                                                "type": "string"
+                                                            }
+                                                        }
+                                                    },
+                                                    "conversation_id": {
+                                                        "type": "string"
+                                                    },
+                                                    "created_at": {
+                                                        "type": "string"
+                                                    },
+                                                    "updated_at": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
                 }
             }
         },
@@ -997,6 +1163,186 @@
                                                     "type": "string"
                                                 },
                                                 "description": {
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     },
+                     "422": {
+                        "$ref": "#/components/responses/Unprocessable_Entity"
+                     }
+                }
+            }
+        },
+        "/conversation/create/buyer": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "summary": "Create conversation",
+                "tags": ["Conversation"],
+                "requestBody": {
+                    "description": "create new conversation",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "event_id": {
+                                        "type": "string"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "event_id" :{
+                                                    "type": "string"
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     },
+                     "422": {
+                        "$ref": "#/components/responses/Unprocessable_Entity"
+                     }
+                }
+            }
+        },
+        "/conversation/remove/{id}": {
+            "delete": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Conversation"],
+                "summary": "Remove conversation",
+                "parameters": [
+                    {
+                      "name": "id",
+                      "in": "path",
+                      "required": true,
+                      "description": "Conversation id",
+                      "schema": {
+                        "type": "string"
+                      }
+                    }
+                ],
+                "responses": {
+                    "200":{
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode":{
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "default": []
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "$ref": "#/components/responses/Unauthorized"
+                     }
+                }              
+            }
+        },
+        "/message/send": {
+            "post": {
+                "security": [
+                    {
+                        "Bearer": []
+                    }
+                ],
+                "tags": ["Message"],
+                "summary": "Send message",
+                "requestBody": {
+                    "description": "create new message",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "type": "object",
+                                "properties": {
+                                    "message": {
+                                        "type": "string"
+                                    },
+                                    "conversation_id": {
+                                        "type": "string"
+                                    }
+                                }   
+                            }
+                        }
+                    }       
+                },
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "statusCode": {
+                                            "type": "number"
+                                        },
+                                        "message": {
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "type": "object",
+                                            "properties": {
+                                                "message" :{
+                                                    "type": "string"
+                                                },
+                                                "sender_id": {
+                                                    "type": "string"
+                                                },
+                                                "conversation_id": {
                                                     "type": "string"
                                                 }
                                             }
