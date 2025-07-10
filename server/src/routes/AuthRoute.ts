@@ -21,5 +21,7 @@ route.use(tokenMiddleware);
 route.get("/credential", authContoller.credential);
 route.get("/transaction/index", authContoller.transaction);
 route.get("/ticket/index", authContoller.ticket);
+route.get("/conversation/index", authContoller.conversation);
+route.get("/message/index/:conversation_id", authContoller.message);
 
 export default route;

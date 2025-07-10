@@ -15,8 +15,8 @@ export function callbackUrl(req: Request, res: Response) {
 }
 
 export async function credential(req: Request, res: Response) {
-    const id = (req.user as UserSelect).id;
-    const user = await authRepository.show(id);
+    const id = (req.user as UserSelect).provider_id;
+    const user = await authRepository.showByProviderId(id);
 
     mockApiSuccess(res, {
         message: "ok",
@@ -38,6 +38,27 @@ export async function transaction(req: Request, res: Response) {
 export async function ticket(req: Request, res: Response) {
     const id = (req.user as UserSelect).id;
     const result = await authRepository.ticket(id);
+    mockApiSuccess(res, {
+        statusCode: status.OK,
+        message: "ok",
+        data: result,
+    });
+}
+
+export async function conversation(req: Request, res: Response) {
+    const { id, role } = req.user as UserSelect;
+    const result = await authRepository.conversation(id, role as NonNullable<typeof role>);
+    mockApiSuccess(res, {
+        statusCode: status.OK,
+        message: "ok",
+        data: result,
+    });
+}
+
+export async function message(req: Request, res: Response) {
+    const user_id = (req.user as UserSelect).id;
+    const conversation_id = req.params.conversation_id;
+    const result = await authRepository.message(user_id, conversation_id);
     mockApiSuccess(res, {
         statusCode: status.OK,
         message: "ok",
