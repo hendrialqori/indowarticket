@@ -2,7 +2,7 @@ import "./config/aliases";
 import "./config/passport";
 import "dotenv/config";
 import express from "express";
-import http from 'node:http'
+import http from "node:http";
 import cookierParser from "cookie-parser";
 import cors from "cors";
 import passport from "passport";
@@ -16,9 +16,9 @@ import * as socketService from "./services/SocketService";
 
 const app = express();
 
-const httpServer = http.createServer(app)
+const httpServer = http.createServer(app);
 
-socketService.initialize(httpServer)
+socketService.initialize(httpServer);
 
 app.use(express.json());
 
