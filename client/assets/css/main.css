@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@import "@nuxt/ui";
+
+
+html {
+    font-size: 14px;
+  }
+
+body {
+    font-family: Inter, Arial, Helvetica, sans-serif;
+  }
