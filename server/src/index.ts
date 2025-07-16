@@ -44,7 +44,7 @@ app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocs));
 
 const server = app.listen(Number(PORT), "0.0.0.0", (error) => {
     if (error) throw error;
-    console.log(`Server listening on ${JSON.stringify(server.address())}`);
+    console.log(`Server listening on http://localhost:${PORT}`);
 });
 
 export { app, server };

@@ -1,34 +1,34 @@
-import * as authRepository from "@/repositories/AuthRepository";
-import { type UserInsert, createUserSchema } from "@/db/schemas/User";
-import { ValidationError } from "@/utils/errors/ValidationError";
 import { ROLE } from "@/constants/enum";
+import { createUserSchema, type UserInsert } from "@/db/schemas/User";
+import { ValidationError } from "@/utils/errors/ValidationError";
+import { AuthRepository } from "@/repositories/AuthRepository";
 
-export async function transaction(id: string) {
-    const result = await authRepository.transaction(id);
-    return result;
-}
+export class AuthService {
+    private repository = new AuthRepository();
 
-export async function ticket(id: string) {
-    const result = await authRepository.ticket(id);
-    return result;
-}
+    public transaction = async (userId: string) => {
+        return this.repository.transaction(userId);
+    };
 
-export async function create(payload: UserInsert) {
-    const result = createUserSchema.safeParse(payload);
+    ticket = async (userId: string) => {
+        return this.repository.ticket(userId);
+    };
 
-    if (!result.success) {
-        throw new ValidationError(result.error, "Error occured when parsing create user payload");
-    }
+    create = async (payload: UserInsert) => {
+        const result = createUserSchema.safeParse(payload);
 
-    await authRepository.create(result.data);
-}
+        if (!result.success) {
+            throw new ValidationError(result.error, "Failed to parse user creation payload");
+        }
 
-export async function conversation(id: string, role: keyof typeof ROLE) {
-    const result = await authRepository.conversation(id, role);
-    return result;
-}
+        await this.repository.create(result.data);
+    };
 
-export async function message(user_id: string, conversation_id: string) {
-    const result = await authRepository.message(user_id, conversation_id);
-    return result;
+    conversation = async (userId: string, role: keyof typeof ROLE) => {
+        return this.repository.conversation(userId, role);
+    };
+
+    message = async (userId: string, conversationId: string) => {
+        return this.repository.message(userId, conversationId);
+    };
 }

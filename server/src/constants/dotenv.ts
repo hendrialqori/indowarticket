@@ -1,5 +1,5 @@
 export const DATABASE_URI = process.env.DATABASE_URI;
-export const CLIENT_URL = process.env.CLIENT_ID;
+export const CLIENT_URL = process.env.CLIENT_URL;
 export const PORT = process.env.PORT;
 export const JWT_ACCESS_KEY = process.env.JWT_ACCESS_KEY;
 

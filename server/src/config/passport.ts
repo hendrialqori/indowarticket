@@ -1,8 +1,8 @@
 import passport from "passport";
 import { Strategy as GoogleStrategy } from "passport-google-oauth20";
 import { GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET } from "@/constants/dotenv";
-import * as authRepository from "@/repositories/AuthRepository";
 import { UserSelect } from "@/db/schemas/User";
+import { AuthRepository } from "@/repositories/AuthRepository";
 
 const googleStrategy = new GoogleStrategy(
     {
@@ -18,6 +18,8 @@ const googleStrategy = new GoogleStrategy(
             picture: String(profile.photos?.[0].value),
             provider_id: profile.id,
         } as UserSelect;
+
+        const authRepository = new AuthRepository()
 
         // check if there is user with provider id equal to google credential id
         const user = await authRepository.showByProviderId(googleCredential.provider_id);
